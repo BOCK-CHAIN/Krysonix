@@ -35,7 +35,6 @@ const ProfileAnnouncements: NextPage = () => {
         try {
           const parsedError = JSON.parse(error.message)
           const errorMessage = parsedError[0]?.message || "An error occurred.Please try again"
-          console.log(parsedError)
           toast.error(errorMessage)
         } catch (parseError) {
           toast.error("Something went wrong, please try again.")
