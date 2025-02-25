@@ -67,7 +67,7 @@ const Playlist: NextPage = () => {
             }))}
             user={{
               id: data.user?.id || "",
-              image: data.user?.image || "",
+              image: data.user?.image,
               name: data.user?.name || "",
               followers: data.user?.followers || 0,
             }}
