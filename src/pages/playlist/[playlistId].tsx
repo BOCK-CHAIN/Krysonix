@@ -63,7 +63,7 @@ const Playlist: NextPage = () => {
             authors={data.authors.map((author) => ({
               id: author?.id || "",
               name: author?.name || "",
-              image: author?.image || "",
+              image: author?.image,
             }))}
             user={{
               id: data.user?.id || "",

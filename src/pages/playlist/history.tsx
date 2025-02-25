@@ -56,11 +56,11 @@ const history: NextPage = () => {
               authors={data.authors.map((author) => ({
                 id: author?.id || "",
                 name: author?.name || "",
-                image: author?.image || "",
+                image: author?.image,
               }))}
               user={{
                 id: data.user?.id || "",
-                image: data.user?.image || "",
+                image: data.user?.image,
                 name: data.user?.name || "",
                 followers: data.user?.followers || 0,
               }}

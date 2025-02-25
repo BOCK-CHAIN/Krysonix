@@ -28,11 +28,11 @@ interface PlaylistPageProps {
   authors: {
     id: string;
     name: string;
-    image: string;
+    image: string | null | undefined;
   }[];
   user: {
     id: string;
-    image: string;
+    image: string | null | undefined;
     name: string;
     followers: number;
   };
