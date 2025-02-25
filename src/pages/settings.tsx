@@ -272,7 +272,7 @@ function CropImageModal({ channel, refetch, imageType }: CropImageModalProps) {
     if (image) {
       setLoading(true);
       const ImageData = {
-        userId: userData.id as string,
+        userId: userData.id ,
         fileType: image?.type,
         fileName: imageType === "backgroundImage" ? "coverImage" : "profileImage",
       }
@@ -311,43 +311,6 @@ function CropImageModal({ channel, refetch, imageType }: CropImageModalProps) {
       },
     })
   }
-
-  // const handleSubmit = (croppedDataUrl: string) => {
-  //   type UploadResponse = {
-  //     secure_url: string
-  //   }
-  //   const userData = {
-  //     id: channel?.id,
-  //     [imageType]: channel[imageType] || undefined,
-  //   }
-
-  //   const formData = new FormData()
-  //   formData.append("upload_preset", "ml_default")
-  //   formData.append("file", croppedDataUrl)
-
-  //   fetch("https://api.cloudinary.com/v1_1/" + env.NEXT_PUBLIC_CLOUDINARY_NAME + "/image/upload", {
-  //     method: "POST",
-  //     body: formData,
-  //   })
-  //     .then((response) => response.json() as Promise<UploadResponse>)
-  //     .then((data) => {
-  //       if (data.secure_url !== undefined) {
-  //         const newUserData = {
-  //           ...userData,
-  //           ...(data.secure_url && { [imageType]: data.secure_url }),
-  //         }
-  //         addUserUpdateMutation.mutate(newUserData, {
-  //           onSuccess: () => {
-  //             setOpen(false)
-  //             void refetch()
-  //           },
-  //         })
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("An error occurred:", error)
-  //     })
-  // }
 
   return (
     <>

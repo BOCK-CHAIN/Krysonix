@@ -1,5 +1,5 @@
 import { Transition, Dialog } from "@headlessui/react"
-import type React from "react"
+import React from "react"
 import { useState, useRef, Fragment, useEffect } from "react"
 import { Edit } from "../Icons/Icons"
 import Cropper from "react-cropper"

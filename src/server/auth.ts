@@ -10,7 +10,7 @@ import { prisma } from "~/server/db";
 import Credentials from "next-auth/providers/credentials";
 import { signInSchema } from "~/lib/zod";
 import { checkuser } from "./user";
-import { User } from "next-auth";
+import { type User } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { env } from "~/env.mjs";
 

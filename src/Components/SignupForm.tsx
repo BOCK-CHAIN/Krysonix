@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Input } from "~/Components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { type z } from "zod";
 import {
   Form,
   FormControl,

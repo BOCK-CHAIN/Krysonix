@@ -1,4 +1,4 @@
-import type React from "react"
+import React from "react"
 import { useState, useRef } from "react"
 import { Loader2, Plus, Upload } from "lucide-react"
 import { Button } from "~/Components/ui/button"

@@ -1,4 +1,4 @@
-import type React from "react"
+import React from "react"
 import { useState, Fragment, useEffect } from "react"
 import { signIn, useSession } from "next-auth/react"
 import { api } from "~/utils/api"
