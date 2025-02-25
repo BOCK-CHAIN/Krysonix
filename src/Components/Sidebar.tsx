@@ -1,7 +1,7 @@
 import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Rewind as ClockRewind, Folder, HelpCircle, Home, Lock, MessageSquarePlus as MessagePlusSquare, Settings, ThumbsUp, UserCheck, File, Video as VideoRecorder, User, Brush, LogOut, X, FileText, Phone } from "lucide-react";
+import { Rewind as ClockRewind, Folder, HelpCircle, Home, Lock, MessageSquarePlus as MessagePlusSquare, Settings, ThumbsUp, UserCheck, File, Video as VideoRecorder, User, Brush, LogOut, X, FileText, Phone, DollarSign, BadgeDollarSign } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { UserImage } from "./Components";
@@ -46,22 +46,10 @@ export default function Sidebar({
       current: router.pathname === `/`,
     },
     {
-      name: "Liked Videos",
-      path: userId ? `/playlist/likedVideos` : "sign-in",
-      icon: (className) => <ThumbsUp className={className} />,
-      current: router.pathname === `/playlist/likedVideos`,
-    },
-    {
-      name: "History",
-      path: userId ? `/playlist/history` : "sign-in",
-      icon: (className) => <ClockRewind className={className} />,
-      current: router.pathname === `/playlist/history`,
-    },
-    {
-      name: "Your Videos",
-      path: userId ? `/${String(userId)}/profileVideos` : "sign-in",
-      icon: (className) => <VideoRecorder className={className} />,
-      current: router.asPath === `/${String(userId)}/profileVideos`,
+      name: "Following",
+      path: userId ? `/${String(userId)}/profileFollowing` : "sign-in",
+      icon: (className) => <UserCheck className={className} />,
+      current: router.asPath === `/${String(userId)}/profileFollowing`,
     },
     {
       name: "Library",
@@ -70,11 +58,24 @@ export default function Sidebar({
       current: router.asPath === `/${String(userId)}/profilePlaylists`,
     },
     {
-      name: "Following",
-      path: userId ? `/${String(userId)}/profileFollowing` : "sign-in",
-      icon: (className) => <UserCheck className={className} />,
-      current: router.asPath === `/${String(userId)}/profileFollowing`,
+      name: "History",
+      path: userId ? `/playlist/history` : "sign-in",
+      icon: (className) => <ClockRewind className={className} />,
+      current: router.pathname === `/playlist/history`,
     },
+    {
+      name: "Liked Videos",
+      path: userId ? `/playlist/likedVideos` : "sign-in",
+      icon: (className) => <ThumbsUp className={className} />,
+      current: router.pathname === `/playlist/likedVideos`,
+    },
+    {
+      name: "Your Videos",
+      path: userId ? `/${String(userId)}/profileVideos` : "sign-in",
+      icon: (className) => <VideoRecorder className={className} />,
+      current: router.asPath === `/${String(userId)}/profileVideos`,
+    },
+
   ];
 
   const SignedInMobileNavigation: NavigationItem[] = [
@@ -163,6 +164,21 @@ export default function Sidebar({
                 </ul>
               </li>
               <li className="mt-auto">
+                <Link
+                  href="*"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    sessionData ? void router.push("/dashboard") : void signIn();
+                  }}
+                  className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
+                >
+                  <Brush
+                    className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-white"
+                  />
+                  <p className={classNames(closeSidebar ? "hidden" : "")}>
+                    Creator Studio
+                  </p>
+                </Link>
                 <Link
                   href="#"
                   onClick={(e) => {
@@ -253,7 +269,7 @@ export default function Sidebar({
                           ))}
                         </ul>
                         <div className=" justify-center items-center flex mt-5">
-                        <UploadButton link="/dashboard" refetch={refetch}  />
+                          <UploadButton link="/dashboard" refetch={refetch} />
                         </div>
                       </li>
 
@@ -276,7 +292,7 @@ export default function Sidebar({
                           href="/refund-and-cancellation"
                           className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
                         >
-                          <Phone className="h-5 w-5 shrink-0 text-gray-300 group-hover:text-white" />
+                          <BadgeDollarSign className="h-5 w-5 shrink-0 text-gray-300 group-hover:text-white" />
                           Refund and Cancellation Policy
                         </Link>
                         <Link
@@ -296,7 +312,7 @@ export default function Sidebar({
                             "bg-[#2a2a2a] text-white hover:bg-[#363636]"
                           )}
                         >
-                          <UserImage image={sessionData?.user.image || ""} className="h-8 w-8 rounded-full" />
+                          <UserImage image={sessionData?.user.image} className="h-8 w-8 rounded-full" />
                           <div className="flex flex-col truncate">
                             <p className="font-semibold">{sessionData.user?.name}</p>
                             <p className="text-gray-300 text-xs">{sessionData.user?.email}</p>

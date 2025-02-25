@@ -24,10 +24,10 @@ export default function Footer() {
       current: router.pathname === `/`,
     },
     {
-      name: "History",
-      path: userId ? `/playlist/history` : "sign-in",
-      icon: (className) => <ClockRewind className={className} />,
-      current: router.pathname === `/playlist/history`,
+      name: "Following",
+      path: userId ? `/${String(userId)}/profileFollowing` : "sign-in",
+      icon: (className) => <UserCheck className={className} />,
+      current: router.asPath === `/${String(userId)}/profileFollowing`,
     },
     {
       name: "Library",
@@ -36,11 +36,13 @@ export default function Footer() {
       current: router.asPath === `/${String(userId)}/profilePlaylists`,
     },
     {
-      name: "Following",
-      path: userId ? `/${String(userId)}/profileFollowing` : "sign-in",
-      icon: (className) => <UserCheck className={className} />,
-      current: router.asPath === `/${String(userId)}/profileFollowing`,
+      name: "History",
+      path: userId ? `/playlist/history` : "sign-in",
+      icon: (className) => <ClockRewind className={className} />,
+      current: router.pathname === `/playlist/history`,
     },
+    
+    
   ];
 
   return (

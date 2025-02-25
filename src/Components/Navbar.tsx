@@ -15,7 +15,9 @@ import {
   Paintbrush as Brush,
   Search,
   User,
-  MessageSquarePlus
+  MessageSquarePlus,
+  BadgeDollarSign,
+  Phone
 } from "lucide-react";
 import { useRouter } from "next/router";
 import { cn } from "~/lib/utils";
@@ -90,13 +92,13 @@ export default function Navbar({ children }: NavbarProps) {
       lineAbove: false,
     },
     {
-      icon: (className) => <Lock className={className} />,
+      icon: (className) => <BadgeDollarSign className={`${className} h-8 w-6`} />,
       name: "Refund and Cancellation Policy",
       path: "/refund-and-cancellation",
       lineAbove: false,
     },
     {
-      icon: (className) => <Lock className={className} />,
+      icon: (className) => <Phone className={className} />,
       name: "Contact Us",
       path: "/contact-us",
       lineAbove: false,
@@ -179,6 +181,24 @@ export default function Navbar({ children }: NavbarProps) {
         </div>
 
         <div className="m-0 hidden w-max px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2 gap-2">
+          {!sessionData ? (
+            <div className="flex gap-2">
+              <Button
+                variant="ghost"
+                onClick={() => void signIn()}
+              >
+                Log in
+              </Button>
+              <Button
+                onClick={() => router.push('/auth/sign-up')}
+              >
+                Sign up
+              </Button>
+            </div>) :
+            <div className="m-0 hidden w-max px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2 gap-2">
+              <UploadButton link={"/dashboard"} refetch={refetch}></UploadButton>
+            </div>
+          }
           <Menu as="div" className="relative ml-5 flex-shrink-0">
             <Menu.Button className="flex rounded-full focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
               {sessionData ? (
@@ -215,9 +235,9 @@ export default function Navbar({ children }: NavbarProps) {
                 <div className="py-1">
                   {Navigation.map((item) => (
                     <Menu.Item key={item.name}>
-                      {({ active }) => (
+                      {({ active, close }) => (
                         <Link
-                          href={item.path}
+                          href={"#"}
                           className={cn(
                             "flex items-center px-4 py-2 text-sm",
                             active ? "bg-gray-700" : "",
@@ -229,6 +249,7 @@ export default function Navbar({ children }: NavbarProps) {
                               void signOut({ redirect: true });
                             } else {
                               void router.push(item.path);
+                              close()
                             }
                           }}
                         >
@@ -242,25 +263,6 @@ export default function Navbar({ children }: NavbarProps) {
               </Menu.Items>
             </Transition>
           </Menu>
-
-          {!sessionData ? (
-            <div className="flex gap-2">
-              <Button
-                variant="ghost"
-                onClick={() => void signIn()}
-              >
-                Log in
-              </Button>
-              <Button
-                onClick={() => router.push('/auth/sign-up')}
-              >
-                Sign up
-              </Button>
-            </div>) :
-            <div className="m-0 hidden w-max px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2 gap-2">
-              <UploadButton link={"/dashboard"} refetch={refetch}></UploadButton>
-            </div>
-          }
         </div>
 
       </div>

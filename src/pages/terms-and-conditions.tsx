@@ -15,7 +15,7 @@ const TermsAndConditionsPage = () => {
                     className="cursor-pointer"
                 />
             </Link>
-            <div className="bg-[#0D0D0D] text-gray-300 min-h-screen w-[80%] px-1 md:px-6 py-8">
+            <div className="bg-[#0D0D0D] text-gray-300 min-h-screen w-[80%] px-1 md:px-6 py-8 mt-4">
                 <h1 className="text-4xl font-bold mb-6 text-center text-white">
                     Terms and Conditions
                 </h1>

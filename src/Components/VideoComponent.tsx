@@ -35,7 +35,7 @@ export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
             className="flex flex-col items-start justify-between "
             key={video.id}
           >
-            <div className="relative w-full">
+            <div className="relative w-full hover:bg-zinc-800 p-2 rounded-2xl">
               <Thumbnail thumbnailUrl={video.thumbnailUrl} />
               <div className=" max-w-xl ">
                 <div className="items-top relative mt-4 flex gap-x-4 ">
@@ -100,7 +100,7 @@ export const SmallSingleColumnVideo: React.FC<VideoComponentProps> = ({
       }
       return (
         <Link href={`/video/${video.id}`} key={video.id} onClick={refetch} className="">
-          <div className=" relative isolate my-4 flex flex-col gap-4 rounded-2xl border hover:bg-gray-900 lg:flex-row ">
+          <div className=" relative p-2 isolate my-4 flex flex-col gap-4 rounded-2xl border text-zinc-100 hover:bg-zinc-800 lg:flex-row ">
             <div className=" aspect-[16/9] sm:aspect-[2/1] lg:w-52  lg:shrink-0">
               <Thumbnail thumbnailUrl={video.thumbnailUrl} />
             </div>

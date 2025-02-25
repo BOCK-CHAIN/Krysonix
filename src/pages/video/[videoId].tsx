@@ -174,6 +174,7 @@ const VideoPage: NextPage = () => {
                         </div>
                       </Link>
                       <FollowButton
+                        refetch={refetchVideoData}
                         followingId={user.id}
                         viewer={{
                           hasFollowed: viewer.hasFollowed,
@@ -223,7 +224,7 @@ const VideoPage: NextPage = () => {
                 }))}
                 users={sidebarVideos.users.map((user) => ({
                   name: user?.name || "",
-                  image: user?.image || "",
+                  image: user?.image,
                 }))}
               />
             )}

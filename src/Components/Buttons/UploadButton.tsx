@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 import { env } from "~/env.mjs"
 import { toast } from "sonner"
 import axios from "axios"
+import Image from "next/image"
 
 export function UploadButton({ link, refetch }: { link?: string, refetch: () => Promise<unknown> }) {
   const [open, setOpen] = useState(false)
@@ -93,7 +94,7 @@ export function UploadButton({ link, refetch }: { link?: string, refetch: () => 
       <DialogTrigger asChild>
         <Button variant="default" size="lg" className="ml-2 flex bg-purple-800 text-gray-200 hover:bg-purple-800">
           <>
-            <Plus className="mr-2 h-5 w-5 shrink-0" />
+            <Image src="/VideoIcon.svg" alt="Video Icon" width={30} height={30} className="mr-2 text-white shrink-0 invert fill-white" />
             Upload
           </>
         </Button>

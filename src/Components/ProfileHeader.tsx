@@ -100,7 +100,7 @@ export default function ProfileHeader() {
               <div className="flex">
                 <UserImage
                   className="h-24 w-24 rounded-full ring-4 ring-white sm:h-32 sm:w-32"
-                  image={channel.image || "/profile.jpg"}
+                  image={channel.image}
                 />
               </div>
               <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">

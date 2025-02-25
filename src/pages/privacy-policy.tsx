@@ -16,10 +16,11 @@ const PrivacyPolicyPage = () => {
                 />
             </Link>
 
-            <div className="bg-[#0D0D0D] text-gray-300 min-h-screen w-[80%] px-1 md:px-6 py-8">
+            <div className="bg-[#0D0D0D] text-gray-300 min-h-screen w-[80%] px-1 md:px-6 py-8 mt-4">
                 <h1 className="text-4xl font-bold mb-6 text-center text-white">
                     Privacy Policy
                 </h1>
+                
                 <p className="text-sm text-gray-400 text-center mb-8">
                     <strong>Last Updated:</strong> {privacyPolicy.lastUpdated}
                 </p>

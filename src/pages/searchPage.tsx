@@ -53,7 +53,7 @@ const SearchPage: NextPage = () => {
               }))}
               users={data.users.map((user) => ({
                 name: user?.name || "",
-                image: user?.image || "",
+                image: user?.image,
               }))}
             />
           )}

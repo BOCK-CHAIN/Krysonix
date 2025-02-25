@@ -74,7 +74,7 @@ export const PlaylistPage: React.FC<PlaylistPageProps> = ({
           <div className="flex flex-row place-content-between gap-x-4">
             <Link href={`/${user.id}/profileVideos`} key={user.id}>
               <div className="mt-4 flex flex-row gap-2">
-                <UserImage image={user.image? user.image : null} />
+                <UserImage image={user.image} />
                 <div className="flex flex-col">
                   <p className="w-max text-sm font-semibold leading-6 text-white">
                     {user.name || ""}
@@ -107,7 +107,7 @@ export const PlaylistPage: React.FC<PlaylistPageProps> = ({
             users={authors.map((author) => ({
               id: author?.id || "",
               name: author?.name || "",
-              image: author?.image || "",
+              image: author?.image,
             }))}
           />
         </div>
