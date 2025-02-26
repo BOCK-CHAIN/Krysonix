@@ -21,4 +21,4 @@ jobs:
         run: npm install
 
       - name: Fomat
-        run: npm run fomat:fix
+        run: npm run format:fix
