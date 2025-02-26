@@ -8,6 +8,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format:fix": "prettier --write .",
+    "format": "prettier --check .",
     "start": "next start"
   },
   "dependencies": {

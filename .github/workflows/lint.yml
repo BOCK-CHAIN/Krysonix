@@ -17,11 +17,5 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
       - name: Fomat
-        run: npm run format:fix
+        run: npm run format
