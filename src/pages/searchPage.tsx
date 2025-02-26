@@ -40,7 +40,7 @@ const SearchPage: NextPage = () => {
       </Head>
       <Layout>
         <>
-          {!data || data.videos.length===0 ? (
+          {!data || data.videos.length === 0 ? (
             <Error />
           ) : (
             <SingleColumnVideo

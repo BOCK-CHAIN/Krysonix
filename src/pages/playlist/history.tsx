@@ -5,7 +5,7 @@ import { type NextPage } from "next/types";
 import { useSession } from "next-auth/react";
 import { PlaylistPage } from "~/Components/PlaylistComponent";
 
-const history: NextPage = () => {
+const History: NextPage = () => {
   const { data: sessionData } = useSession();
   const QueryTitle = "History" as string;
   const { data, isLoading, error } = api.playlist.getPlaylistsByTitle.useQuery({
@@ -72,4 +72,4 @@ const history: NextPage = () => {
   );
 };
 
-export default history;
+export default History;

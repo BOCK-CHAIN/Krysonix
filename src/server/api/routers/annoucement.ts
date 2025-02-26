@@ -186,7 +186,13 @@ export const announcementRouter = createTRPCRouter({
     .input(
       z.object({
         userId: z.string(),
-        message: z.string().max(200,"Announcement must contain less than 200 letters").min(5,"Announcement is too short. Should contain alteast 5 letters."),
+        message: z
+          .string()
+          .max(200, "Announcement must contain less than 200 letters")
+          .min(
+            5,
+            "Announcement is too short. Should contain alteast 5 letters."
+          ),
       })
     )
     .mutation(async ({ ctx, input }) => {

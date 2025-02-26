@@ -1,7 +1,27 @@
 import { Fragment, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Rewind as ClockRewind, Folder, HelpCircle, Home, Lock, MessageSquarePlus as MessagePlusSquare, Settings, ThumbsUp, UserCheck, File, Video as VideoRecorder, User, Brush, LogOut, X, FileText, Phone, DollarSign, BadgeDollarSign } from "lucide-react";
+import {
+  Rewind as ClockRewind,
+  Folder,
+  HelpCircle,
+  Home,
+  Lock,
+  MessageSquarePlus as MessagePlusSquare,
+  Settings,
+  ThumbsUp,
+  UserCheck,
+  File,
+  Video as VideoRecorder,
+  User,
+  Brush,
+  LogOut,
+  X,
+  FileText,
+  Phone,
+  DollarSign,
+  BadgeDollarSign,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { UserImage } from "./Components";
@@ -35,8 +55,7 @@ export default function Sidebar({
   const router = useRouter();
   const { data: sessionData } = useSession();
   const userId = sessionData?.user.id;
-  const { refetch } =
-    api.user.getDashboardData.useQuery(userId as string);
+  const { refetch } = api.user.getDashboardData.useQuery(userId as string);
 
   const DesktopNavigation: NavigationItem[] = [
     {
@@ -75,7 +94,6 @@ export default function Sidebar({
       icon: (className) => <VideoRecorder className={className} />,
       current: router.asPath === `/${String(userId)}/profileVideos`,
     },
-
   ];
 
   const SignedInMobileNavigation: NavigationItem[] = [
@@ -123,10 +141,12 @@ export default function Sidebar({
 
   return (
     <>
-      <div className={cn(
-        closeSidebar ? "lg:w-20" : "lg:w-56",
-        "bottom-0 top-16 hidden lg:fixed lg:z-40 lg:flex lg:flex-col"
-      )}>
+      <div
+        className={cn(
+          closeSidebar ? "lg:w-20" : "lg:w-56",
+          "bottom-0 top-16 hidden lg:fixed lg:z-40 lg:flex lg:flex-col"
+        )}
+      >
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-[#2a2a2a] bg-[#1a1a1a] px-6 pb-4">
           <nav className="flex flex-1 flex-col pt-8">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -151,10 +171,14 @@ export default function Sidebar({
                           "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                         )}
                       >
-                        {item.icon(cn(
-                          "h-5 w-5 shrink-0",
-                          item.current ? "text-white" : "text-gray-300 group-hover:text-white"
-                        ))}
+                        {item.icon(
+                          cn(
+                            "h-5 w-5 shrink-0",
+                            item.current
+                              ? "text-white"
+                              : "text-gray-300 group-hover:text-white"
+                          )
+                        )}
                         <p className={cn(closeSidebar ? "hidden" : "")}>
                           {item.name}
                         </p>
@@ -168,13 +192,13 @@ export default function Sidebar({
                   href="*"
                   onClick={(e) => {
                     e.preventDefault();
-                    sessionData ? void router.push("/dashboard") : void signIn();
+                    sessionData
+                      ? void router.push("/dashboard")
+                      : void signIn();
                   }}
                   className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
                 >
-                  <Brush
-                    className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-white"
-                  />
+                  <Brush className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-white" />
                   <p className={classNames(closeSidebar ? "hidden" : "")}>
                     Creator Studio
                   </p>
@@ -187,9 +211,7 @@ export default function Sidebar({
                   }}
                   className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-300 hover:bg-[#2a2a2a] hover:text-white"
                 >
-                  <Settings
-                    className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-white"
-                  />
+                  <Settings className="h-5 w-5 shrink-0 stroke-gray-500 group-hover:stroke-white" />
                   <p className={classNames(closeSidebar ? "hidden" : "")}>
                     Settings
                   </p>
@@ -242,7 +264,7 @@ export default function Sidebar({
                 <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#1a1a1a] px-6 pb-4">
                   <nav className="flex flex-1 flex-col pt-4">
                     <ul role="list" className="flex flex-1 flex-col gap-y-4">
-                      <li className="border-t border-[#2a2a2a] h-full">
+                      <li className="h-full border-t border-[#2a2a2a]">
                         <ul role="list" className="-mx-2 space-y-1 pt-3">
                           {mobileNavigation.map((item) => (
                             <li key={item.name}>
@@ -259,16 +281,20 @@ export default function Sidebar({
                                   "group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6"
                                 )}
                               >
-                                {item.icon(cn(
-                                  "h-5 w-5 shrink-0",
-                                  item.current ? "text-white" : "text-gray-300 group-hover:text-white"
-                                ))}
+                                {item.icon(
+                                  cn(
+                                    "h-5 w-5 shrink-0",
+                                    item.current
+                                      ? "text-white"
+                                      : "text-gray-300 group-hover:text-white"
+                                  )
+                                )}
                                 {item.name}
                               </Link>
                             </li>
                           ))}
                         </ul>
-                        <div className=" justify-center items-center flex mt-5">
+                        <div className=" mt-5 flex items-center justify-center">
                           <UploadButton link="/dashboard" refetch={refetch} />
                         </div>
                       </li>
@@ -306,20 +332,30 @@ export default function Sidebar({
 
                       {sessionData ? (
                         <div
-                          onClick={(e) => { e.preventDefault(); router.push('/settings') }}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            router.push("/settings");
+                          }}
                           className={cn(
-                            "flex items-center gap-x-3 rounded-lg p-2 text-sm font-semibold cursor-pointer leading-6",
+                            "flex cursor-pointer items-center gap-x-3 rounded-lg p-2 text-sm font-semibold leading-6",
                             "bg-[#2a2a2a] text-white hover:bg-[#363636]"
                           )}
                         >
-                          <UserImage image={sessionData?.user.image} className="h-8 w-8 rounded-full" />
+                          <UserImage
+                            image={sessionData?.user.image}
+                            className="h-8 w-8 rounded-full"
+                          />
                           <div className="flex flex-col truncate">
-                            <p className="font-semibold">{sessionData.user?.name}</p>
-                            <p className="text-gray-300 text-xs">{sessionData.user?.email}</p>
+                            <p className="font-semibold">
+                              {sessionData.user?.name}
+                            </p>
+                            <p className="text-xs text-gray-300">
+                              {sessionData.user?.email}
+                            </p>
                           </div>
                           <Button
                             variant="ghost"
-                            className="ml-auto text-gray-300 hover:text-white hover:bg-[#363636]"
+                            className="ml-auto text-gray-300 hover:bg-[#363636] hover:text-white"
                             onClick={(e) => {
                               e.preventDefault();
                               void signOut();
@@ -333,19 +369,18 @@ export default function Sidebar({
                           <Button
                             variant="default"
                             className="w-full bg-[#2a2a2a] text-white hover:bg-[#363636]"
-                            onClick={() => router.push('/auth/sign-up')}
+                            onClick={() => router.push("/auth/sign-up")}
                           >
                             Sign Up
                           </Button>
                           <Button
                             variant="outline"
-                            className="w-full border border-gray-600 text-gray-900 bg-gray-400 hover:bg-white hover:text-gray-950"
+                            className="w-full border border-gray-600 bg-gray-400 text-gray-900 hover:bg-white hover:text-gray-950"
                             onClick={() => void signIn()}
                           >
                             Log In
                           </Button>
                         </div>
-
                       )}
                     </ul>
                   </nav>

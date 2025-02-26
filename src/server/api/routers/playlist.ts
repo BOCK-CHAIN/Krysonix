@@ -28,7 +28,6 @@ export const playlistRouter = createTRPCRouter({
           },
         },
       });
-      
 
       if (!rawPlaylist) {
         throw new Error("Playlist not found");
@@ -226,9 +225,9 @@ export const playlistRouter = createTRPCRouter({
 
       const userWithFollowers = { ...rawPlaylist.user, followers };
 
-      const videosWithUser = rawPlaylist.videos.map(({ video,updatedAt }) => ({
+      const videosWithUser = rawPlaylist.videos.map(({ video, updatedAt }) => ({
         ...video,
-        updatedAt:updatedAt,
+        updatedAt: updatedAt,
         author: video?.user,
       }));
 

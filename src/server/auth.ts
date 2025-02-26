@@ -65,7 +65,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("No User found in the token");
         }
 
-        if(!adapter || !adapter.createSession) {
+        if (!adapter || !adapter.createSession) {
           throw new Error("Adapter not found");
         }
 
@@ -73,7 +73,7 @@ export const authOptions: NextAuthOptions = {
           sessionToken,
           userId: params.token.sub,
           expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-        })
+        });
 
         if (!createdSession) {
           throw new Error("Session not created");
@@ -93,10 +93,12 @@ export const authOptions: NextAuthOptions = {
       authorize: async (credentials) => {
         try {
           const isValid = signInSchema.safeParse(credentials);
-          if(!isValid.success) {
+          if (!isValid.success) {
             return null;
           }
-          const {email, password} = await signInSchema.parseAsync(credentials);
+          const { email, password } = await signInSchema.parseAsync(
+            credentials
+          );
 
           const res = await checkuser(email, password);
           if (res.success) {

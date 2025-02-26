@@ -44,7 +44,6 @@ export const PlaylistPage: React.FC<PlaylistPageProps> = ({
   authors,
   user,
 }) => {
-
   if (!playlist || !videos || !authors || !user) {
     return <></>;
   }
@@ -133,7 +132,7 @@ export function MultiColumnPlaylist({
       {playlists?.map((playlist) => (
         <Link
           href={`/playlist/${playlist.id}`}
-          className="flex flex-col items-start justify-between hover:bg-none rounded-2xl"
+          className="flex flex-col items-start justify-between rounded-2xl hover:bg-none"
           key={playlist.id}
         >
           <SinglePlaylist playlist={playlist}>

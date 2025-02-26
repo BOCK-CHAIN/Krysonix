@@ -30,7 +30,7 @@ export function ErrorMessage({
   };
 
   return (
-    <div className="relative flex flex-col h-full w-full items-center justify-center gap-2 text-center">
+    <div className="relative flex h-full w-full flex-col items-center justify-center gap-2 text-center">
       <IconSelection className="h-8 w-8 text-red-500" icon={icon} />
       <h1 className="text-2xl font-semibold text-white">{message}</h1>
       <p className="max-w-xs text-gray-400">{description}</p>
@@ -41,7 +41,7 @@ export function ErrorMessage({
 
 export function LoadingMessage() {
   return (
-    <div className="relative h-screen w-full flex items-center justify-center gap-2 text-center">
+    <div className="relative flex h-screen w-full items-center justify-center gap-2 text-center">
       <Loader state color="purple"></Loader>
     </div>
   );

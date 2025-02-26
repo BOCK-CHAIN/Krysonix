@@ -8,10 +8,10 @@ import { PlaylistPage } from "~/Components/PlaylistComponent";
 const Playlist: NextPage = () => {
   const router = useRouter();
   const { playlistId } = router.query;
-  if(playlistId === "History") {
+  if (playlistId === "History") {
     router.push("/playlist/history");
   }
-  if(playlistId === "LikedVideos") {
+  if (playlistId === "LikedVideos") {
     router.push("/playlist/likedVideos");
   }
 

@@ -28,7 +28,7 @@ export default function SignIn({
 }) {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
-  const signInMutation = api.auth.signin.useMutation()
+  const signInMutation = api.auth.signin.useMutation();
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -43,7 +43,7 @@ export default function SignIn({
       await signInMutation.mutateAsync(data, {
         onSuccess: async (res) => {
           if (!res.success) {
-            toast.error(res.message)
+            toast.error(res.message);
             return;
           }
 
@@ -56,7 +56,7 @@ export default function SignIn({
           if (!result || !result.ok) {
             toast.error("Something went wrong. Please try again.");
           } else {
-            toast.success("Signed in successfully")
+            toast.success("Signed in successfully");
             if (setIsOpened) {
               setIsOpened(false);
             }
@@ -65,22 +65,23 @@ export default function SignIn({
         },
         onError: (err) => {
           toast.error("Something went wrong. Please try again.");
-        }
-      })
-
+        },
+      });
     } catch (err) {
       toast.error("Something went wrong. Please try again.");
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   return (
-    <div className="flex w-full items-center justify-center min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 p-4">
-      <Card className="w-full max-w-md bg-neutral-800 bg-opacity-50 backdrop-blur-md rounded-2xl p-8 border border-gray-700 shadow-xl">
+    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 p-4">
+      <Card className="w-full max-w-md rounded-2xl border border-gray-700 bg-neutral-800 bg-opacity-50 p-8 shadow-xl backdrop-blur-md">
         <CardHeader className="flex flex-col items-center gap-4">
           <Image src="/logo.svg" alt="Logo" width="120" height="120" />
-          <CardTitle className="text-white text-4xl font-bold">Sign In</CardTitle>
-          <p className="text-gray-200 text-lg">Welcome back! Please log in.</p>
+          <CardTitle className="text-4xl font-bold text-white">
+            Sign In
+          </CardTitle>
+          <p className="text-lg text-gray-200">Welcome back! Please log in.</p>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -91,11 +92,16 @@ export default function SignIn({
                 disabled={loading}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-100 text-lg">Email</FormLabel>
+                    <FormLabel className="text-lg text-gray-100">
+                      Email
+                    </FormLabel>
                     <FormControl>
-                      <Input className="w-full bg-neutral-700 text-white text-lg border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500" {...field} />
+                      <Input
+                        className="w-full rounded-lg border border-gray-600 bg-neutral-700 text-lg text-white focus:ring-2 focus:ring-indigo-500"
+                        {...field}
+                      />
                     </FormControl>
-                    <FormMessage className="text-red-400 text-base" />
+                    <FormMessage className="text-base text-red-400" />
                   </FormItem>
                 )}
               />
@@ -105,19 +111,33 @@ export default function SignIn({
                 disabled={loading}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-100 text-lg">Password</FormLabel>
+                    <FormLabel className="text-lg text-gray-100">
+                      Password
+                    </FormLabel>
                     <FormControl>
-                      <Input type="password" className="bg-neutral-700 text-white text-lg border border-gray-600 rounded-lg focus:ring-2 focus:ring-indigo-500" {...field} />
+                      <Input
+                        type="password"
+                        className="rounded-lg border border-gray-600 bg-neutral-700 text-lg text-white focus:ring-2 focus:ring-indigo-500"
+                        {...field}
+                      />
                     </FormControl>
-                    <FormMessage className="text-red-400 text-base" />
+                    <FormMessage className="text-base text-red-400" />
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" disabled={loading} className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg py-3 text-xl font-semibold transition duration-300 ease-in-out transform hover:scale-105">
-                {loading ? <>
-                  <Loader2 /> Signin In
-                </> : "Sign In"}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full transform rounded-lg bg-indigo-600 py-3 text-xl font-semibold transition duration-300 ease-in-out hover:scale-105 hover:bg-indigo-500"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 /> Signin In
+                  </>
+                ) : (
+                  "Sign In"
+                )}
               </Button>
               <div className="text-center">
                 <Button
@@ -130,7 +150,7 @@ export default function SignIn({
                       window.location.replace("/auth/sign-up");
                     }
                   }}
-                  className="text-indigo-300 hover:text-indigo-200 text-base"
+                  className="text-base text-indigo-300 hover:text-indigo-200"
                   variant="link"
                 >
                   Don&apos;t have an account? Sign up

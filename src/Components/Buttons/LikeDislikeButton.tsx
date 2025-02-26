@@ -1,30 +1,34 @@
-import { api } from "~/utils/api"
-import { signIn, useSession } from "next-auth/react"
-import { useEngagementButton } from "~/Hooks/useEngagement"
-import ThumbsUp from "../Icons/ThumbsUp"
-import ThumbsDown from "../Icons/ThumbsDown"
+import { api } from "~/utils/api";
+import { signIn, useSession } from "next-auth/react";
+import { useEngagementButton } from "~/Hooks/useEngagement";
+import ThumbsUp from "../Icons/ThumbsUp";
+import ThumbsDown from "../Icons/ThumbsDown";
 
 interface LikeDislikeButtonProps {
   EngagementData: {
-    id: string
-    likes: number
-    dislikes: number
-  }
+    id: string;
+    likes: number;
+    dislikes: number;
+  };
   viewer: {
-    hasLiked: boolean
-    hasDisliked: boolean
-  }
+    hasLiked: boolean;
+    hasDisliked: boolean;
+  };
 }
 
-export default function VideoEngagement({ EngagementData, viewer }: LikeDislikeButtonProps) {
-  const { likeCount, dislikeCount, userChoice, handleLike, handleDislike } = useEngagementButton({
-    EngagementData,
-    viewer,
-    addLikeMutation: api.videoEngagement.addLike.useMutation(),
-    addDislikeMutation: api.videoEngagement.addDislike.useMutation(),
-  })
+export default function VideoEngagement({
+  EngagementData,
+  viewer,
+}: LikeDislikeButtonProps) {
+  const { likeCount, dislikeCount, userChoice, handleLike, handleDislike } =
+    useEngagementButton({
+      EngagementData,
+      viewer,
+      addLikeMutation: api.videoEngagement.addLike.useMutation(),
+      addDislikeMutation: api.videoEngagement.addDislike.useMutation(),
+    });
 
-  const { data: sessionData } = useSession()
+  const { data: sessionData } = useSession();
 
   return (
     <div className="flex-end isolate inline-flex rounded-md shadow-sm">
@@ -46,7 +50,11 @@ export default function VideoEngagement({ EngagementData, viewer }: LikeDislikeB
             : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
         }`}
       >
-        <ThumbsUp className={`h-4 w-4 shrink-0 ${userChoice.like ? "fill-white" : "stroke-current"}`} />
+        <ThumbsUp
+          className={`h-4 w-4 shrink-0 ${
+            userChoice.like ? "fill-white" : "stroke-current"
+          }`}
+        />
         <p className="pl-2">{likeCount}</p>
       </button>
       <button
@@ -66,10 +74,13 @@ export default function VideoEngagement({ EngagementData, viewer }: LikeDislikeB
             : "bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white"
         }`}
       >
-        <ThumbsDown className={`h-4 w-4 shrink-0 ${userChoice.dislike ? "fill-white" : "stroke-current"}`} />
+        <ThumbsDown
+          className={`h-4 w-4 shrink-0 ${
+            userChoice.dislike ? "fill-white" : "stroke-current"
+          }`}
+        />
         <p className="pl-2">{dislikeCount}</p>
       </button>
     </div>
-  )
+  );
 }
-

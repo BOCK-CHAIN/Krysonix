@@ -1,37 +1,37 @@
-import type { NextPage } from "next"
-import Head from "next/head"
-import { Layout } from "../Components/Components"
-import { useSession } from "next-auth/react"
-import { Button } from "~/Components/ui/button"
-import Image from "next/image"
-import { Fragment, useEffect, useState } from "react"
-import { Dialog, Transition } from "@headlessui/react"
-import { ImageCropper } from "~/Components/Buttons/EditButton"
-import { api } from "~/utils/api"
-import { env } from "~/env.mjs"
-import { Input } from "~/Components/ui/input"
-import { Textarea } from "~/Components/ui/textarea"
-import { Label } from "~/Components/ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "~/Components/ui/card"
-import { toast } from "sonner"
-import axios from "axios"
-import Loader from "~/Components/ui/loader"
+import type { NextPage } from "next";
+import Head from "next/head";
+import { Layout } from "../Components/Components";
+import { useSession } from "next-auth/react";
+import { Button } from "~/Components/ui/button";
+import Image from "next/image";
+import { Fragment, useEffect, useState } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { ImageCropper } from "~/Components/Buttons/EditButton";
+import { api } from "~/utils/api";
+import { env } from "~/env.mjs";
+import { Input } from "~/Components/ui/input";
+import { Textarea } from "~/Components/ui/textarea";
+import { Label } from "~/Components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "~/Components/ui/card";
+import { toast } from "sonner";
+import axios from "axios";
+import Loader from "~/Components/ui/loader";
 
 const Settings: NextPage = () => {
-  const { data: sessionData } = useSession()
-  const userId = sessionData?.user.id
-  const addUserUpdateMutation = api.user.updateUser.useMutation()
+  const { data: sessionData } = useSession();
+  const userId = sessionData?.user.id;
+  const addUserUpdateMutation = api.user.updateUser.useMutation();
   const { data, refetch } = api.user.getChannelById.useQuery({
     id: userId as string,
-  })
-  const [loading, setLoading] = useState(false)
-  const channel = data?.user
+  });
+  const [loading, setLoading] = useState(false);
+  const channel = data?.user;
   const [user, setUser] = useState({
     name: "",
     email: "",
     handle: "",
     description: "",
-  })
+  });
 
   useEffect(() => {
     if (channel) {
@@ -40,25 +40,26 @@ const Settings: NextPage = () => {
         email: channel.email || "",
         handle: channel.handle || "",
         description: channel.description || "",
-      })
+      });
     }
-  }, [channel])
+  }, [channel]);
 
   if (!channel) {
-    return <div className="text-gray-200">Channel not loading</div>
+    return <div className="text-gray-200">Channel not loading</div>;
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
     setUser((prevUser) => ({
       ...prevUser,
       [event.target.name]: event.target.value,
-    }))
-  }
-
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     const userData = {
       id: channel.id,
       name: channel.name || undefined,
@@ -67,7 +68,7 @@ const Settings: NextPage = () => {
       image: channel.image || undefined,
       backgroundImage: channel.backgroundImage || undefined,
       description: channel.description || undefined,
-    }
+    };
 
     if (
       user.name !== channel.name ||
@@ -77,28 +78,31 @@ const Settings: NextPage = () => {
     ) {
       const newUserData = {
         ...userData,
-      }
-      if (user.name && user.name !== channel.name) newUserData.name = user.name
-      if (user.description && user.description !== channel.description) newUserData.description = user.description
-      if (user.handle && user.handle !== channel.handle) newUserData.handle = user.handle
-      if (user.email && user.email !== channel.email) newUserData.email = user.email
+      };
+      if (user.name && user.name !== channel.name) newUserData.name = user.name;
+      if (user.description && user.description !== channel.description)
+        newUserData.description = user.description;
+      if (user.handle && user.handle !== channel.handle)
+        newUserData.handle = user.handle;
+      if (user.email && user.email !== channel.email)
+        newUserData.email = user.email;
 
       if (!user.name || !user.handle || !user.email) {
-        return toast.error("Name and handle are required")
+        return toast.error("Name and handle are required");
       }
 
       addUserUpdateMutation.mutate(newUserData, {
         onSuccess: () => {
-          toast.success("Profile updated")
-          void refetch()
-          setLoading(false)
+          toast.success("Profile updated");
+          void refetch();
+          setLoading(false);
         },
         onError: (error) => {
-          toast.error(error.message)
+          toast.error(error.message);
         },
-      })
+      });
     }
-  }
+  };
 
   return (
     <>
@@ -134,7 +138,9 @@ const Settings: NextPage = () => {
                 </div>
                 <div className="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                   <div className="mt-6 min-w-0 flex-1 sm:hidden md:block">
-                    <h1 className="truncate text-2xl font-bold text-gray-200">{channel.name}</h1>
+                    <h1 className="truncate text-2xl font-bold text-gray-200">
+                      {channel.name}
+                    </h1>
                     <p className="text-gray-400">{channel.handle}</p>
                   </div>
                 </div>
@@ -159,7 +165,7 @@ const Settings: NextPage = () => {
                         id="name"
                         value={user.name || ""}
                         onChange={handleInputChange}
-                        className="bg-gray-700 text-gray-200 border-gray-600"
+                        className="border-gray-600 bg-gray-700 text-gray-200"
                       />
                     </div>
 
@@ -174,7 +180,7 @@ const Settings: NextPage = () => {
                         type="email"
                         value={user.email || ""}
                         onChange={handleInputChange}
-                        className="bg-gray-700 text-gray-200 border-gray-600"
+                        className="border-gray-600 bg-gray-700 text-gray-200"
                       />
                     </div>
                   </div>
@@ -199,7 +205,7 @@ const Settings: NextPage = () => {
                           id="handle"
                           value={user.handle || ""}
                           onChange={handleInputChange}
-                          className="rounded-l-none bg-gray-700 text-gray-200 border-gray-600"
+                          className="rounded-l-none border-gray-600 bg-gray-700 text-gray-200"
                         />
                       </div>
                     </div>
@@ -215,15 +221,26 @@ const Settings: NextPage = () => {
                           rows={3}
                           value={user.description || ""}
                           onChange={handleInputChange}
-                          className="bg-gray-700 text-gray-200 border-gray-600"
+                          className="border-gray-600 bg-gray-700 text-gray-200"
                         />
                       </div>
-                      <p className="mt-3 text-sm text-gray-400">Write a few sentences about yourself.</p>
+                      <p className="mt-3 text-sm text-gray-400">
+                        Write a few sentences about yourself.
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-end">
-                    <Button onClick={handleSubmit} className="bg-purple-800 text-gray-200 hover:bg-purple-800">
-                      {loading ? <><Loader state></Loader></> : <>Save</>}
+                    <Button
+                      onClick={handleSubmit}
+                      className="bg-purple-800 text-gray-200 hover:bg-purple-800"
+                    >
+                      {loading ? (
+                        <>
+                          <Loader state></Loader>
+                        </>
+                      ) : (
+                        <>Save</>
+                      )}
                     </Button>
                   </div>
                 </form>
@@ -233,90 +250,103 @@ const Settings: NextPage = () => {
         </>
       </Layout>
     </>
-  )
-}
+  );
+};
 
 // Interface for CropImageModal props
 interface CropImageModalProps {
   channel: {
-    id: string
-    image?: string
-    backgroundImage?: string
-  }
-  refetch: () => Promise<unknown>
-  imageType: "backgroundImage" | "image"
+    id: string;
+    image?: string;
+    backgroundImage?: string;
+  };
+  refetch: () => Promise<unknown>;
+  imageType: "backgroundImage" | "image";
 }
 
 function CropImageModal({ channel, refetch, imageType }: CropImageModalProps) {
-  const [image, setImage] = useState<File | null>(null)
-  const [croppedImage, setCroppedImage] = useState<string | null>(null)
-  const [open, setOpen] = useState(false)
-  const addUserUpdateMutation = api.user.updateUser.useMutation()
-  const [loading, setLoading] = useState(false)
+  const [image, setImage] = useState<File | null>(null);
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const addUserUpdateMutation = api.user.updateUser.useMutation();
+  const [loading, setLoading] = useState(false);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0 && (e.target.files[0]?.type.includes("image") || e.target.files[0]?.type.includes("img")) && e.target.files[0].size < 5242880) {
-      setImage(e.target.files[0] ? e.target.files[0] : null)
-      setOpen(true)
+    if (
+      e.target.files &&
+      e.target.files.length > 0 &&
+      (e.target.files[0]?.type.includes("image") ||
+        e.target.files[0]?.type.includes("img")) &&
+      e.target.files[0].size < 5242880
+    ) {
+      setImage(e.target.files[0] ? e.target.files[0] : null);
+      setOpen(true);
     } else {
-      if (!e.target.files) return
-      toast.error("Invalid file type")
+      if (!e.target.files) return;
+      toast.error("Invalid file type");
     }
-  }
+  };
 
   const handleSubmitA = async (croppedDataUrl: string) => {
     const userData = {
       id: channel?.id,
       [imageType]: channel[imageType] || undefined,
-    }
+    };
     if (image) {
       setLoading(true);
       const ImageData = {
-        userId: userData.id ,
+        userId: userData.id,
         fileType: image?.type,
-        fileName: imageType === "backgroundImage" ? "coverImage" : "profileImage",
-      }
+        fileName:
+          imageType === "backgroundImage" ? "coverImage" : "profileImage",
+      };
       try {
         const resp = await fetch(`/api/${env.NEXT_PUBLIC_CDN_LINK}`, {
           method: "POST",
           body: JSON.stringify(ImageData),
-        })
+        });
 
-        const { signedUrl } = await resp.json()
+        const { signedUrl } = await resp.json();
 
         if (!signedUrl) {
-          return toast.error("Error uploading image")
+          return toast.error("Error uploading image");
         }
 
-        const blob = await fetch(croppedDataUrl).then((r) => r.blob())
+        const blob = await fetch(croppedDataUrl).then((r) => r.blob());
 
         await axios.put(signedUrl, blob, {
           headers: {
-            "Content-Type": image.type
-          }
-        })
+            "Content-Type": image.type,
+          },
+        });
         const url = new URL(signedUrl);
         const imageUrl = url.origin + url.pathname + "?v=" + Date.now();
-        userData[imageType] = imageUrl
+        userData[imageType] = imageUrl;
       } catch (err) {
-        toast.error("An error occurred while changing the image")
+        toast.error("An error occurred while changing the image");
       }
     }
     addUserUpdateMutation.mutate(userData, {
       onSuccess: () => {
-        setOpen(false)
-        void refetch()
+        setOpen(false);
+        void refetch();
         setLoading(false);
-        toast.success("Image updated successfully")
+        toast.success("Image updated successfully");
       },
-    })
-  }
+    });
+  };
 
   return (
     <>
       {imageType === "image" ? (
         <label htmlFor="file-upload-image" className="cursor-pointer">
-          <input id="file-upload-image" name="image" type="file" className="sr-only" onChange={onFileChange} />
+          <input
+            id="file-upload-image"
+            name="image"
+            type="file"
+            className="sr-only"
+            onChange={onFileChange}
+          />
           <Image
             className="h-24 w-24 rounded-full ring-4 ring-gray-800 sm:h-32 sm:w-32"
             width={128}
@@ -368,15 +398,17 @@ function CropImageModal({ channel, refetch, imageType }: CropImageModalProps) {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                {!loading ? <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-800 p-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
-                  <ImageCropper
-                    setCroppedImage={setCroppedImage}
-                    image={image}
-                    imageType={"backgroundImage"}
-                    handleSubmit={handleSubmitA}
-                    setOpen={setOpen}
-                  />
-                </Dialog.Panel> : (
+                {!loading ? (
+                  <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-gray-800 p-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
+                    <ImageCropper
+                      setCroppedImage={setCroppedImage}
+                      image={image}
+                      imageType={"backgroundImage"}
+                      handleSubmit={handleSubmitA}
+                      setOpen={setOpen}
+                    />
+                  </Dialog.Panel>
+                ) : (
                   <Loader state />
                 )}
               </Transition.Child>
@@ -385,8 +417,7 @@ function CropImageModal({ channel, refetch, imageType }: CropImageModalProps) {
         </Dialog>
       </Transition.Root>
     </>
-  )
+  );
 }
 
-export default Settings
-
+export default Settings;

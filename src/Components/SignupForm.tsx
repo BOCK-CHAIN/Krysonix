@@ -26,7 +26,7 @@ export default function SignUpForm({
 }: {
   setIsOpened?: (isOpened: boolean) => void;
 }) {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const registerMutation = api.auth.signup.useMutation();
 
@@ -41,7 +41,7 @@ export default function SignUpForm({
   });
 
   async function onSubmit(data: z.infer<typeof signUpSchema>) {
-    setLoading(true)
+    setLoading(true);
     await registerMutation.mutateAsync(data, {
       onSuccess: async (res) => {
         if (res.success) {
@@ -54,26 +54,37 @@ export default function SignUpForm({
             password: data.password,
           });
           if (!result!.ok) {
-            toast.error("something went wrong. Please SignIn")
+            toast.error("something went wrong. Please SignIn");
           }
           toast.success("Account created successfully");
           router.replace("/");
-          setLoading(false)
+          setLoading(false);
         } else {
           toast.error(res.message);
-          setLoading(false)
+          setLoading(false);
         }
       },
     });
   }
 
   return (
-    <div className="flex w-full items-center justify-center min-h-screen bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 p-4">
-      <Card className="w-full max-w-md bg-neutral-800 bg-opacity-50 backdrop-blur-md rounded-2xl p-8 border border-gray-700 shadow-xl">
+    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 p-4">
+      <Card className="w-full max-w-md rounded-2xl border border-gray-700 bg-neutral-800 bg-opacity-50 p-8 shadow-xl backdrop-blur-md">
         <CardHeader className="flex flex-col items-center gap-3">
-          <Image onClick={() => router.push('/')} src="/logo.svg" alt="Logo" width="120" height="120" className="cursor-pointer" />
-          <CardTitle className="text-white text-4xl font-bold">Sign Up</CardTitle>
-          <p className="text-gray-200 text-lg">Create an account to get started</p>
+          <Image
+            onClick={() => router.push("/")}
+            src="/logo.svg"
+            alt="Logo"
+            width="120"
+            height="120"
+            className="cursor-pointer"
+          />
+          <CardTitle className="text-4xl font-bold text-white">
+            Sign Up
+          </CardTitle>
+          <p className="text-lg text-gray-200">
+            Create an account to get started
+          </p>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -83,11 +94,17 @@ export default function SignUpForm({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-100 text-lg">Name</FormLabel>
+                    <FormLabel className="text-lg text-gray-100">
+                      Name
+                    </FormLabel>
                     <FormControl>
-                      <Input disabled={loading} className="w-full bg-neutral-700 text-white text-lg border border-gray-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500" {...field} />
+                      <Input
+                        disabled={loading}
+                        className="w-full rounded-lg border border-gray-600 bg-neutral-700 p-3 text-lg text-white focus:ring-2 focus:ring-indigo-500"
+                        {...field}
+                      />
                     </FormControl>
-                    <FormMessage className="text-red-400 text-base" />
+                    <FormMessage className="text-base text-red-400" />
                   </FormItem>
                 )}
               />
@@ -96,11 +113,17 @@ export default function SignUpForm({
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-100 text-lg">Email</FormLabel>
+                    <FormLabel className="text-lg text-gray-100">
+                      Email
+                    </FormLabel>
                     <FormControl>
-                      <Input disabled={loading} className="w-full bg-neutral-700 text-white text-lg border border-gray-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500" {...field} />
+                      <Input
+                        disabled={loading}
+                        className="w-full rounded-lg border border-gray-600 bg-neutral-700 p-3 text-lg text-white focus:ring-2 focus:ring-indigo-500"
+                        {...field}
+                      />
                     </FormControl>
-                    <FormMessage className="text-red-400 text-base" />
+                    <FormMessage className="text-base text-red-400" />
                   </FormItem>
                 )}
               />
@@ -109,16 +132,18 @@ export default function SignUpForm({
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-100 text-lg">Password</FormLabel>
+                    <FormLabel className="text-lg text-gray-100">
+                      Password
+                    </FormLabel>
                     <FormControl>
                       <Input
                         disabled={loading}
                         type="password"
-                        className="w-full bg-neutral-700 text-white text-lg border border-gray-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500"
+                        className="w-full rounded-lg border border-gray-600 bg-neutral-700 p-3 text-lg text-white focus:ring-2 focus:ring-indigo-500"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400 text-base" />
+                    <FormMessage className="text-base text-red-400" />
                   </FormItem>
                 )}
               />
@@ -127,16 +152,18 @@ export default function SignUpForm({
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-100 text-lg">Confirm Password</FormLabel>
+                    <FormLabel className="text-lg text-gray-100">
+                      Confirm Password
+                    </FormLabel>
                     <FormControl>
                       <Input
                         disabled={loading}
                         type="password"
-                        className="w-full bg-neutral-700 text-white text-lg border border-gray-600 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500"
+                        className="w-full rounded-lg border border-gray-600 bg-neutral-700 p-3 text-lg text-white focus:ring-2 focus:ring-indigo-500"
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage className="text-red-400 text-base" />
+                    <FormMessage className="text-base text-red-400" />
                   </FormItem>
                 )}
               />
@@ -152,17 +179,25 @@ export default function SignUpForm({
                       window.location.replace("/auth/sign-in");
                     }
                   }}
-                  className="text-indigo-300 hover:text-indigo-200 text-base"
+                  className="text-base text-indigo-300 hover:text-indigo-200"
                   variant="link"
                 >
                   Already have an account? Sign in
                 </Button>
               </div>
-              <Button type="submit" disabled={loading} className="w-full bg-indigo-600 hover:bg-indigo-500 rounded-lg p-3 text-xl font-semibold transition duration-300 ease-in-out transform hover:scale-105">
-                {loading ? <>
-                  <Loader2 />
-                  Signing Up...
-                </> : "Sign Up"}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full transform rounded-lg bg-indigo-600 p-3 text-xl font-semibold transition duration-300 ease-in-out hover:scale-105 hover:bg-indigo-500"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 />
+                    Signing Up...
+                  </>
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
             </form>
           </Form>

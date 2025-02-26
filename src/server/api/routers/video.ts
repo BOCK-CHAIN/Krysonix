@@ -198,7 +198,7 @@ export const videoRouter = createTRPCRouter({
           publish: true,
           title: {
             contains: input,
-            mode: "insensitive"
+            mode: "insensitive",
           },
         },
         take: 10,

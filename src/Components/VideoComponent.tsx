@@ -35,14 +35,17 @@ export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
             className="flex flex-col items-start justify-between "
             key={video.id}
           >
-            <div className="relative w-full hover:bg-zinc-800 p-2 rounded-2xl">
+            <div className="relative w-full rounded-2xl p-2 hover:bg-zinc-800">
               <Thumbnail thumbnailUrl={video.thumbnailUrl} />
               <div className=" max-w-xl ">
                 <div className="items-top relative mt-4 flex gap-x-4 ">
                   <UserImage image={user.image} />
                   <div className="w-full">
                     <VideoTitle title={video.title} limitHeight={true} />
-                    <VideoInfo views={video.views} createdAt={video.createdAt} />
+                    <VideoInfo
+                      views={video.views}
+                      createdAt={video.createdAt}
+                    />
                     <UserName name={user.name || ""} />
                   </div>
                 </div>
@@ -53,7 +56,7 @@ export const MuliColumnVideo: React.FC<VideoComponentProps> = ({
       })}
     </div>
   );
-}
+};
 
 export const SingleColumnVideo: React.FC<VideoComponentProps> = ({
   videos,
@@ -67,7 +70,7 @@ export const SingleColumnVideo: React.FC<VideoComponentProps> = ({
       }
       return (
         <Link href={`/video/${video.id}`} key={video.id}>
-          <div className="my-5 flex flex-col gap-4 rounded-lg hover:bg-zinc-800 p-2 lg:flex-row text-zinc-100">
+          <div className="my-5 flex flex-col gap-4 rounded-lg p-2 text-zinc-100 hover:bg-zinc-800 lg:flex-row">
             <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:w-64 lg:shrink-0">
               <Thumbnail thumbnailUrl={video.thumbnailUrl} />
             </div>
@@ -99,8 +102,13 @@ export const SmallSingleColumnVideo: React.FC<VideoComponentProps> = ({
         return null;
       }
       return (
-        <Link href={`/video/${video.id}`} key={video.id} onClick={refetch} className="">
-          <div className=" relative p-2 isolate my-4 flex flex-col gap-4 rounded-2xl border text-zinc-100 hover:bg-zinc-800 lg:flex-row ">
+        <Link
+          href={`/video/${video.id}`}
+          key={video.id}
+          onClick={refetch}
+          className=""
+        >
+          <div className=" relative isolate my-4 flex flex-col gap-4 rounded-2xl border p-2 text-zinc-100 hover:bg-zinc-800 lg:flex-row ">
             <div className=" aspect-[16/9] sm:aspect-[2/1] lg:w-52  lg:shrink-0">
               <Thumbnail thumbnailUrl={video.thumbnailUrl} />
             </div>
@@ -131,8 +139,9 @@ export function VideoTitle({
 }) {
   return (
     <h1
-      className={`max-w-md font-semibold leading-6 text-zinc-50 group-hover:text-gray-600 ${limitSize ? "text-base" : "text-lg"
-        } ${limitHeight ? "max-h-12 w-full overflow-hidden" : ""}`}
+      className={`max-w-md font-semibold leading-6 text-zinc-50 group-hover:text-gray-600 ${
+        limitSize ? "text-base" : "text-lg"
+      } ${limitHeight ? "max-h-12 w-full overflow-hidden" : ""}`}
     >
       {title}
     </h1>
@@ -175,7 +184,7 @@ export function UserImage({
   return (
     <div className={`relative h-10 w-10 ${className}`}>
       <Image
-        src={image==null || undefined || "" ? "/profile.jpg": image}
+        src={image == null || undefined || "" ? "/profile.jpg" : image}
         alt=""
         className="absolute rounded-full"
         fill

@@ -1,59 +1,59 @@
-import React from "react"
-import { useState, Fragment, useEffect } from "react"
-import { signIn, useSession } from "next-auth/react"
-import { api } from "~/utils/api"
-import { Button } from "~/Components/ui/button"
-import { Dialog, Transition } from "@headlessui/react"
-import { Input } from "~/Components/ui/input"
-import { Label } from "~/Components/ui/label"
-import FolderPlus from "../Icons/FolderPlus"
-import Close from "../Icons/Close"
-import { Checkbox } from "../ui/checkbox"
+import React from "react";
+import { useState, Fragment, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
+import { api } from "~/utils/api";
+import { Button } from "~/Components/ui/button";
+import { Dialog, Transition } from "@headlessui/react";
+import { Input } from "~/Components/ui/input";
+import { Label } from "~/Components/ui/label";
+import FolderPlus from "../Icons/FolderPlus";
+import Close from "../Icons/Close";
+import { Checkbox } from "../ui/checkbox";
 
 export default function SaveButton({ videoId }: { videoId: string }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const [checkedStatus, setCheckedStatus] = useState<{
-    [key: string]: boolean
-  }>({})
+    [key: string]: boolean;
+  }>({});
 
-  const { data: sessionData } = useSession()
+  const { data: sessionData } = useSession();
 
-  const { data: playlists, refetch: refetchPlaylists } = api.playlist.getSavePlaylistData.useQuery(
-    sessionData?.user?.id as string,
-    {
+  const { data: playlists, refetch: refetchPlaylists } =
+    api.playlist.getSavePlaylistData.useQuery(sessionData?.user?.id as string, {
       enabled: false,
-    },
-  )
+    });
 
   useEffect(() => {
     if (videoId && open) {
-      void refetchPlaylists()
-      const initialCheckedStatus: { [key: string]: boolean } = {}
+      void refetchPlaylists();
+      const initialCheckedStatus: { [key: string]: boolean } = {};
       playlists?.forEach((playlist) => {
-        initialCheckedStatus[playlist.id] = playlist.videos.some((videoItem) => videoItem.videoId === videoId)
-      })
+        initialCheckedStatus[playlist.id] = playlist.videos.some(
+          (videoItem) => videoItem.videoId === videoId
+        );
+      });
 
-      setCheckedStatus(initialCheckedStatus)
+      setCheckedStatus(initialCheckedStatus);
     }
-  }, [open, videoId, playlists, refetchPlaylists])
+  }, [open, videoId, playlists, refetchPlaylists]);
 
-  const addVideoToPlaylistMutation = api.video.addVideoToPlaylist.useMutation()
+  const addVideoToPlaylistMutation = api.video.addVideoToPlaylist.useMutation();
   const handleCheckmarkToggle = (
     event: React.ChangeEvent<HTMLInputElement>,
     input: {
-      playlistId: string
-      videoId: string
-    },
+      playlistId: string;
+      videoId: string;
+    }
   ) => {
-    addVideoToPlaylistMutation.mutate(input)
+    addVideoToPlaylistMutation.mutate(input);
     setCheckedStatus({
       ...checkedStatus,
       [input.playlistId]: event.target.checked,
-    })
-  }
+    });
+  };
 
-  const [newPlaylistName, setNewPlaylistName] = useState("")
-  const createPlaylistMutation = api.playlist.addPlaylist.useMutation()
+  const [newPlaylistName, setNewPlaylistName] = useState("");
+  const createPlaylistMutation = api.playlist.addPlaylist.useMutation();
   const handleCreatePlaylist = () => {
     if (newPlaylistName) {
       createPlaylistMutation.mutate(
@@ -63,16 +63,16 @@ export default function SaveButton({ videoId }: { videoId: string }) {
         },
         {
           onSuccess: () => {
-            void refetchPlaylists()
-            setNewPlaylistName("")
+            void refetchPlaylists();
+            setNewPlaylistName("");
           },
-        },
-      )
+        }
+      );
     }
-  }
+  };
 
   if (!videoId) {
-    return <div className="text-neutral-400">Loading...</div>
+    return <div className="text-neutral-400">Loading...</div>;
   }
 
   return (
@@ -80,7 +80,7 @@ export default function SaveButton({ videoId }: { videoId: string }) {
       <Button
         size="sm"
         onClick={sessionData ? () => setOpen(true) : () => void signIn()}
-        className="flex items-center bg-purple-800 hover:bg-purple-700 text-white"
+        className="flex items-center bg-purple-800 text-white hover:bg-purple-700"
       >
         <FolderPlus className="mr-2 h-5 w-5 shrink-0 stroke-white" />
         Save
@@ -123,7 +123,10 @@ export default function SaveButton({ videoId }: { videoId: string }) {
                     </button>
                   </div>
                   <div className="mb-2 mt-5 text-center sm:mt-0">
-                    <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-200">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-base font-semibold leading-6 text-gray-200"
+                    >
                       Save Video To Playlist
                     </Dialog.Title>
                   </div>
@@ -137,15 +140,20 @@ export default function SaveButton({ videoId }: { videoId: string }) {
                             checked={checkedStatus[playlist.id] || false}
                             onCheckedChange={(checked) =>
                               handleCheckmarkToggle(
-                                { target: { checked: checked as boolean } } as React.ChangeEvent<HTMLInputElement>,
+                                {
+                                  target: { checked: checked as boolean },
+                                } as React.ChangeEvent<HTMLInputElement>,
                                 {
                                   videoId: videoId,
                                   playlistId: playlist.id,
-                                },
+                                }
                               )
                             }
                           />
-                          <Label htmlFor={playlist.id} className="ml-3 text-sm font-medium leading-6 text-gray-200">
+                          <Label
+                            htmlFor={playlist.id}
+                            className="ml-3 text-sm font-medium leading-6 text-gray-200"
+                          >
                             {playlist.title}
                           </Label>
                         </div>
@@ -155,7 +163,10 @@ export default function SaveButton({ videoId }: { videoId: string }) {
 
                   <div className="mt-5 flex w-full flex-col gap-2 text-left">
                     <div>
-                      <Label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-200">
+                      <Label
+                        htmlFor="name"
+                        className="block text-sm font-medium leading-6 text-gray-200"
+                      >
                         Name
                       </Label>
                       <div className="mt-2">
@@ -165,17 +176,21 @@ export default function SaveButton({ videoId }: { videoId: string }) {
                           id="text"
                           value={newPlaylistName}
                           onChange={(event) => {
-                            setNewPlaylistName(event.target.value)
+                            setNewPlaylistName(event.target.value);
                           }}
                           onKeyUp={(event) => {
-                            if (event.key === "Enter") handleCreatePlaylist()
+                            if (event.key === "Enter") handleCreatePlaylist();
                           }}
                           className="block w-full rounded-md border-0 bg-gray-700 py-1.5 text-gray-200 shadow-sm ring-1 ring-inset ring-gray-600 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-purple-800 sm:text-sm sm:leading-6"
                           placeholder="Enter Playlist Name"
                         />
                       </div>
                     </div>
-                    <Button variant="default" onClick={handleCreatePlaylist} className="mt-2">
+                    <Button
+                      variant="default"
+                      onClick={handleCreatePlaylist}
+                      className="mt-2"
+                    >
                       Create New Playlist
                     </Button>
                   </div>
@@ -186,5 +201,5 @@ export default function SaveButton({ videoId }: { videoId: string }) {
         </Dialog>
       </Transition.Root>
     </>
-  )
+  );
 }

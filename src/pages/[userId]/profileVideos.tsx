@@ -32,10 +32,10 @@ const ProfileVideos: NextPage = () => {
             message="No Videos Uploaded"
             description="Click to upload new video. You have yet to upload a video."
           >
-
-            <Button onClick={() => router.push("/dashboard")}
-              className="ml-2 flex bg-purple-900 hover:bg-purple-800" >
-
+            <Button
+              onClick={() => router.push("/dashboard")}
+              className="ml-2 flex bg-purple-900 hover:bg-purple-800"
+            >
               <Plus className="mr-2 h-5 w-5 shrink-0 stroke-white" />
               New Video
             </Button>
@@ -56,7 +56,7 @@ const ProfileVideos: NextPage = () => {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Videos</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>

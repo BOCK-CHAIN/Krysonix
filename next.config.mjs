@@ -8,10 +8,16 @@
 const config = {
   reactStrictMode: true,
   images: {
-    domains: ["i.ytimg.com", "yt3.googleusercontent.com","storage.googleapis.com","krysonix.s3.amazonaws.com","d8ur7xooihlv1.cloudfront.net"],
+    domains: [
+      "i.ytimg.com",
+      "yt3.googleusercontent.com",
+      "storage.googleapis.com",
+      "krysonix.s3.amazonaws.com",
+      "d8ur7xooihlv1.cloudfront.net",
+    ],
   },
-  eslint:{
-    ignoreDuringBuilds:true
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you

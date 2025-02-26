@@ -11,13 +11,13 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method == "POST") {
-    const { fileType, userId,fileName, type } = JSON.parse(req.body);
+    const { fileType, userId, fileName, type } = JSON.parse(req.body);
     if (!fileType || !userId || !fileName) {
       return res.status(400).json({ error: "Invalid request" });
     }
     try {
       const s3Command = new PutObjectCommand({
-        Key: type?`${userId}/${fileName}/${type}`: `${userId}/${fileName}`,
+        Key: type ? `${userId}/${fileName}/${type}` : `${userId}/${fileName}`,
         Bucket: process.env.S3_BUCKET_NAME,
         ContentType: fileType,
       });

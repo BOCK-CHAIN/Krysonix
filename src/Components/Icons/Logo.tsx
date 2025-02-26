@@ -739,7 +739,7 @@ export function LogoMini(props: React.SVGProps<SVGSVGElement>) {
       {...props}
       width="100%"
       viewBox="0 0 499 513"
-		enableBackground="new 0 0 499 513"
+      enableBackground="new 0 0 499 513"
       //   xml:space="preserve"
     >
       <path

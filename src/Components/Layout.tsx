@@ -14,14 +14,13 @@ function classNames(...classes: string[]) {
 
 export default function Layout({ children, closeSidebar }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
 
   return (
-    <div className="h-screen flex flex-col overflow-hidden bg-[#0D0D0D] text-gray-300">
+    <div className="flex h-screen flex-col overflow-hidden bg-[#0D0D0D] text-gray-300">
       <Navbar>
         <Button
           variant="ghost"
-          className="text-gray-400 hover:text-white hover:bg-gray-800"
+          className="text-gray-400 hover:bg-gray-800 hover:text-white"
           onClick={() => setSidebarOpen(true)}
         >
           <Menu className="h-6 w-6" aria-hidden="true" />
@@ -38,8 +37,13 @@ export default function Layout({ children, closeSidebar }: LayoutProps) {
         <Footer />
       </div>
 
-      <div className={classNames(closeSidebar ? "lg:pl-20" : "lg:pl-56", "h-full bg-[#181818] text-gray-200")}>
-        <main className="py-24 mx-auto px-4 sm:px-6 lg:px-8 space-x-4 h-full overflow-y-auto no-scrollbar">
+      <div
+        className={classNames(
+          closeSidebar ? "lg:pl-20" : "lg:pl-56",
+          "h-full bg-[#181818] text-gray-200"
+        )}
+      >
+        <main className="no-scrollbar mx-auto h-full space-x-4 overflow-y-auto px-4 py-24 sm:px-6 lg:px-8">
           {children}
         </main>
       </div>

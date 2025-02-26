@@ -45,7 +45,12 @@ export default function DeleteButton({
       </Button>
 
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-50" initialFocus={cancelButtonRef} onClose={setOpen}>
+        <Dialog
+          as="div"
+          className="relative z-50"
+          initialFocus={cancelButtonRef}
+          onClose={setOpen}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -68,26 +73,27 @@ export default function DeleteButton({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="w-full max-w-sm sm:max-w-md transform overflow-hidden rounded-xl bg-[#181818] p-6 text-left shadow-xl transition-all">
+              <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-xl bg-[#181818] p-6 text-left shadow-xl transition-all sm:max-w-md">
                 <div className="flex flex-col items-center">
                   <div className="flex h-12 w-12">
                     <RedTrash aria-hidden="true" />
                   </div>
                   <Dialog.Title
                     as="h3"
-                    className="mt-3 text-lg font-semibold text-gray-200 text-center"
+                    className="mt-3 text-center text-lg font-semibold text-gray-200"
                   >
                     Delete Video
                   </Dialog.Title>
-                  <p className="mt-2 text-sm text-gray-400 text-center">
-                    Are you sure you want to delete this video? Once deleted, it cannot be recovered.
+                  <p className="mt-2 text-center text-sm text-gray-400">
+                    Are you sure you want to delete this video? Once deleted, it
+                    cannot be recovered.
                   </p>
                 </div>
 
-                <div className="mt-5 flex flex-col sm:flex-row sm:justify-end gap-3">
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:justify-end">
                   <Button
                     variant="default"
-                    className="w-full sm:w-auto bg-red-800 text-neutral-200 hover:bg-red-700"
+                    className="w-full bg-red-800 text-neutral-200 hover:bg-red-700 sm:w-auto"
                     disabled={loading}
                     onClick={async () => {
                       setLoading(true);
@@ -108,7 +114,7 @@ export default function DeleteButton({
                     )}
                   </Button>
                   <Button
-                    className="w-full sm:w-auto bg-gray-700 px-4 py-2 text-sm font-semibold text-gray-200 shadow-sm hover:bg-gray-600"
+                    className="w-full bg-gray-700 px-4 py-2 text-sm font-semibold text-gray-200 shadow-sm hover:bg-gray-600 sm:w-auto"
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >

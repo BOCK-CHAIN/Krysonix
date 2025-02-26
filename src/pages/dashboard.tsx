@@ -8,7 +8,7 @@ import {
 } from "../Components/Components";
 import { useSession } from "next-auth/react";
 import { api } from "~/utils/api";
-import { Eye, UserCheck, Heart } from 'lucide-react';
+import { Eye, UserCheck, Heart } from "lucide-react";
 import React from "react";
 import {
   Card,
@@ -24,7 +24,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "~/Components/ui/table"
+} from "~/Components/ui/table";
 import { Badge } from "~/Components/ui/badge";
 import { UploadButton } from "~/Components/Buttons/UploadButton";
 import DeleteButton from "~/Components/Buttons/DeleteButton";
@@ -116,7 +116,9 @@ const Dashboard: NextPage = () => {
                         {item.icon("h-4 w-4 text-gray-400")}
                       </CardHeader>
                       <CardContent>
-                        <div className="text-2xl font-bold text-purple-700">{item.stat}</div>
+                        <div className="text-2xl font-bold text-purple-700">
+                          {item.stat}
+                        </div>
                       </CardContent>
                     </Card>
                   ))}
@@ -126,10 +128,12 @@ const Dashboard: NextPage = () => {
               <Card className="bg-gray-950 text-gray-200">
                 <CardHeader>
                   <CardTitle>Your Videos</CardTitle>
-                  <CardDescription className="text-gray-400">Manage and track your uploaded content</CardDescription>
+                  <CardDescription className="text-gray-400">
+                    Manage and track your uploaded content
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="w-full  no-scrollbar ">
+                  <div className="no-scrollbar  w-full ">
                     <Table className=" no-scrollbar">
                       <TableHeader>
                         <TableRow className="hover:bg-gray-950">
@@ -142,13 +146,16 @@ const Dashboard: NextPage = () => {
                       </TableHeader>
                       <TableBody>
                         {data?.videos.map((video) => (
-                          <TableRow key={video.id} className="hover:bg-gray-950">
+                          <TableRow
+                            key={video.id}
+                            className="hover:bg-gray-950"
+                          >
                             <TableCell>
                               <PublishedButton video={video} />
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center space-x-4">
-                                <div className="w-[160px] h-[90px] flex-shrink-0">
+                                <div className="h-[90px] w-[160px] flex-shrink-0">
                                   <Thumbnail
                                     thumbnailUrl={video.thumbnailUrl || ""}
                                     width={160}
@@ -156,25 +163,40 @@ const Dashboard: NextPage = () => {
                                   />
                                 </div>
                                 <div className="w-full">
-                                  <p className="font-medium text-gray-200">{video.title}</p>
-                                  <p className="text-sm text-gray-400 line-clamp-1">{video.description}</p>
+                                  <p className="font-medium text-gray-200">
+                                    {video.title}
+                                  </p>
+                                  <p className="line-clamp-1 text-sm text-gray-400">
+                                    {video.description}
+                                  </p>
                                 </div>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div className="flex space-x-2">
-                                <Badge variant="secondary" className="bg-green-900 text-green-200 hover:bg-green-800">
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-green-900 text-green-200 hover:bg-green-800"
+                                >
                                   {video.likes} Likes
                                 </Badge>
-                                <Badge variant="destructive" className="bg-red-900 text-red-200">
+                                <Badge
+                                  variant="destructive"
+                                  className="bg-red-900 text-red-200"
+                                >
                                   {video.dislikes} Dislikes
                                 </Badge>
                               </div>
                             </TableCell>
-                            <TableCell>{video.createdAt.toLocaleDateString()}</TableCell>
+                            <TableCell>
+                              {video.createdAt.toLocaleDateString()}
+                            </TableCell>
                             <TableCell className="text-right">
                               <div className="flex justify-end  space-x-2">
-                                <DeleteButton videoId={video.id} refetch={refetch} />
+                                <DeleteButton
+                                  videoId={video.id}
+                                  refetch={refetch}
+                                />
                                 <EditButton
                                   video={{
                                     videoUrl: video.videoUrl as string,

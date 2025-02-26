@@ -30,14 +30,12 @@ const Home: NextPage = () => {
     <>
       <Head>
         <title>Krysonix</title>
-        <meta
-          name="description"
-        />
+        <meta name="description" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout >
+      <Layout>
         {!data || data.videos.length === 0 ? (
-          <div className="h-full w-full flex items-center justify-center">
+          <div className="flex h-full w-full items-center justify-center">
             <Error />
           </div>
         ) : (
@@ -52,7 +50,7 @@ const Home: NextPage = () => {
               }))}
               users={data.users.map((user) => ({
                 name: user?.name || "",
-                image: user?.image ,
+                image: user?.image,
               }))}
             />
           </>

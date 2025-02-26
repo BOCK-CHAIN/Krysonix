@@ -44,7 +44,7 @@ const ProfilePlaylists: NextPage = () => {
 
   return (
     <>
-    <Head>
+      <Head>
         <title>Playlists</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>

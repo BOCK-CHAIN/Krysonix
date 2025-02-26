@@ -29,7 +29,7 @@ import { env } from "~/env.mjs";
 const VideoPage: NextPage = () => {
   const router = useRouter();
   const { videoId } = router.query;
-  const { data: sessionData  } = useSession();
+  const { data: sessionData } = useSession();
 
   const {
     data: videoData,
@@ -58,15 +58,16 @@ const VideoPage: NextPage = () => {
   const addView = async (input: { id: string; userId: string }) => {
     addViewMutation.mutate(input);
   };
+  async function addViewFunc() {
+    await addView({
+      id: videoId as string,
+      userId: sessionData ? sessionData.user.id : " ",
+    });
+  }
   useEffect(() => {
-    if (videoId ) {
+    if (videoId) {
       void refetchVideoData();
-      async function addViewFunc() {
-        await addView({
-          id: videoId as string,
-          userId: sessionData ? sessionData.user.id : " ",
-        });
-      }
+
       addViewFunc();
     }
   }, [sessionData]);
@@ -121,9 +122,9 @@ const VideoPage: NextPage = () => {
                   /> */}
                   <video
                     preload="metadata"
-                    className="w-full aspect-video  rounded-xl"
+                    className="aspect-video w-full  rounded-xl"
                     controls
-                    controlsList="nodownload" 
+                    controlsList="nodownload"
                     disablePictureInPicture
                   >
                     <source
@@ -131,7 +132,7 @@ const VideoPage: NextPage = () => {
                     />
                   </video>
                 </div>
-                <div className="flex space-x-3 mb-3 rounded-2xl border border-gray-200 p-4 shadow-sm">
+                <div className="mb-3 flex space-x-3 rounded-2xl border border-gray-200 p-4 shadow-sm">
                   <div className="min-w-0 flex-1 space-y-3 ">
                     <div className="xs:flex-wrap flex flex-row justify-between gap-4 max-md:flex-wrap">
                       <div className="flex flex-col items-start justify-center gap-1 self-stretch ">

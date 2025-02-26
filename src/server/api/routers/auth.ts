@@ -84,13 +84,13 @@ export const authRouter = createTRPCRouter({
     .mutation(async ({ input, ctx }) => {
       try {
         const isValid = signUpSchema.safeParse(input);
-        if(!isValid.success){
+        if (!isValid.success) {
           return {
             success: false,
             message: "Invalid input",
-          }
+          };
         }
-        const {email, password, name} = input;
+        const { email, password, name } = input;
 
         const existedUser = await ctx.prisma.user.findUnique({
           where: {
