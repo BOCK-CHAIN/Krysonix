@@ -17,8 +17,12 @@ export default function ProfileHeader() {
 
   const isOwnProfile = userId === sessionData?.user.id;
 
-  if (!isOwnProfile && (router.pathname === `/[userId]/profilePlaylists` || router.pathname === `/[userId]/profileFollowing`)) {
-    router.push(`/${userId}/profileVideos`)
+  if (
+    !isOwnProfile &&
+    (router.pathname === `/[userId]/profilePlaylists` ||
+      router.pathname === `/[userId]/profileFollowing`)
+  ) {
+    router.push(`/${userId}/profileVideos`);
   }
 
   const tabs = useMemo(() => {
@@ -45,7 +49,9 @@ export default function ProfileHeader() {
       },
     ];
 
-    return isOwnProfile ? allTabs : allTabs.filter(tab => ["Videos", "Announcements"].includes(tab.name));
+    return isOwnProfile
+      ? allTabs
+      : allTabs.filter((tab) => ["Videos", "Announcements"].includes(tab.name));
   }, [userId, router.pathname, isOwnProfile]);
 
   const { data, isLoading, error, refetch } = api.user.getChannelById.useQuery({
@@ -129,7 +135,7 @@ export default function ProfileHeader() {
                       <Edit className="mr-2 h-5 w-5 shrink-0 stroke-white" />
                       Edit
                     </Button>
-                  ) :
+                  ) : (
                     <FollowButton
                       refetch={refetch}
                       followingId={userId as string}
@@ -137,7 +143,7 @@ export default function ProfileHeader() {
                         hasFollowed: viewer.hasFollowed,
                       }}
                     />
-                  }
+                  )}
                 </div>
               </div>
             </div>

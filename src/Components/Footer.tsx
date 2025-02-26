@@ -1,7 +1,12 @@
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ClockIcon as ClockRewind, Folder, Home, UserCheck } from 'lucide-react';
+import {
+  ClockIcon as ClockRewind,
+  Folder,
+  Home,
+  UserCheck,
+} from "lucide-react";
 import { cn } from "~/lib/utils";
 
 interface NavigationItem {
@@ -41,8 +46,6 @@ export default function Footer() {
       icon: (className) => <ClockRewind className={className} />,
       current: router.pathname === `/playlist/history`,
     },
-    
-    
   ];
 
   return (
@@ -67,10 +70,14 @@ export default function Footer() {
               }
             }}
           >
-            {tab.icon(cn(
-              "h-5 w-5 shrink-0",
-              tab.current ? "text-white" : "text-gray-300 group-hover:text-white"
-            ))}
+            {tab.icon(
+              cn(
+                "h-5 w-5 shrink-0",
+                tab.current
+                  ? "text-white"
+                  : "text-gray-300 group-hover:text-white"
+              )
+            )}
             {tab.name}
           </Link>
         ))}

@@ -17,7 +17,7 @@ import {
   User,
   MessageSquarePlus,
   BadgeDollarSign,
-  Phone
+  Phone,
 } from "lucide-react";
 import { useRouter } from "next/router";
 import { cn } from "~/lib/utils";
@@ -43,16 +43,15 @@ export default function Navbar({ children }: NavbarProps) {
   const { data: sessionData } = useSession();
   const userId = sessionData?.user.id;
 
-  const { refetch } =
-    api.user.getDashboardData.useQuery(userId as string);
+  const { refetch } = api.user.getDashboardData.useQuery(userId as string);
 
   const [searchInput, setSearchInput] = useState("");
   const debouncedSearchInput = useDebounce(searchInput, 300);
   const router = useRouter();
 
   useEffect(() => {
-    void refetch()
-  }, [sessionData?.user.id])
+    void refetch();
+  }, [sessionData?.user.id]);
 
   useEffect(() => {
     if (debouncedSearchInput) {
@@ -92,7 +91,9 @@ export default function Navbar({ children }: NavbarProps) {
       lineAbove: false,
     },
     {
-      icon: (className) => <BadgeDollarSign className={`${className} h-8 w-6`} />,
+      icon: (className) => (
+        <BadgeDollarSign className={`${className} h-8 w-6`} />
+      ),
       name: "Refund and Cancellation Policy",
       path: "/refund-and-cancellation",
       lineAbove: false,
@@ -162,12 +163,12 @@ export default function Navbar({ children }: NavbarProps) {
 
         <div className="w-full min-w-0 flex-1 lg:px-0 xl:col-span-8">
           <div className="flex items-center px-6 py-4">
-            <div className="w-full relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               <Input
                 id="search"
                 name="search"
-                className="pl-10 bg-[#181818] border-gray-600 text-gray-200"
+                className="border-gray-600 bg-[#181818] pl-10 text-gray-200"
                 placeholder="Search"
                 type="search"
                 onChange={(e) => setSearchInput(e.target.value)}
@@ -176,29 +177,26 @@ export default function Navbar({ children }: NavbarProps) {
           </div>
         </div>
 
-        <div className="flex items-center lg:hidden">
-          {children}
-        </div>
+        <div className="flex items-center lg:hidden">{children}</div>
 
-        <div className="m-0 hidden w-max px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2 gap-2">
+        <div className="m-0 hidden w-max gap-2 px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2">
           {!sessionData ? (
             <div className="flex gap-2">
-              <Button
-                variant="ghost"
-                onClick={() => void signIn()}
-              >
+              <Button variant="ghost" onClick={() => void signIn()}>
                 Log in
               </Button>
-              <Button
-                onClick={() => router.push('/auth/sign-up')}
-              >
+              <Button onClick={() => router.push("/auth/sign-up")}>
                 Sign up
               </Button>
-            </div>) :
-            <div className="m-0 hidden w-max px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2 gap-2">
-              <UploadButton link={"/dashboard"} refetch={refetch}></UploadButton>
             </div>
-          }
+          ) : (
+            <div className="m-0 hidden w-max gap-2 px-0 lg:flex lg:items-center lg:justify-end xl:col-span-2">
+              <UploadButton
+                link={"/dashboard"}
+                refetch={refetch}
+              ></UploadButton>
+            </div>
+          )}
           <Menu as="div" className="relative ml-5 flex-shrink-0">
             <Menu.Button className="flex rounded-full focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2">
               {sessionData ? (
@@ -217,9 +215,9 @@ export default function Navbar({ children }: NavbarProps) {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute right-0 mt-2 w-48 bg-[#181818] text-gray-300 rounded-md shadow-lg ring-1 ring-gray-700">
+              <Menu.Items className="absolute right-0 mt-2 w-48 rounded-md bg-[#181818] text-gray-300 shadow-lg ring-1 ring-gray-700">
                 {sessionData && (
-                  <div className="px-4 py-3 flex items-center border-b border-gray-600">
+                  <div className="flex items-center border-b border-gray-600 px-4 py-3">
                     <UserImage image={sessionData?.user.image} />
                     <div className="ml-3 flex-grow overflow-hidden">
                       <p className="truncate text-sm font-medium">
@@ -249,7 +247,7 @@ export default function Navbar({ children }: NavbarProps) {
                               void signOut({ redirect: true });
                             } else {
                               void router.push(item.path);
-                              close()
+                              close();
                             }
                           }}
                         >
@@ -264,7 +262,6 @@ export default function Navbar({ children }: NavbarProps) {
             </Transition>
           </Menu>
         </div>
-
       </div>
     </div>
   );
