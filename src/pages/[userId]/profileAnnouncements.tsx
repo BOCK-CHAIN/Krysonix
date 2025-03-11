@@ -28,10 +28,6 @@ const ProfileAnnouncements: NextPage = () => {
   const [announcementInput, setAnnouncementInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  console.log(userId, "userId")
-  console.log(sessionData?.user.id, "sessionData")
-  console.log(userId == sessionData?.user.id, "userId == sessionData.user.id")
-
   const addAnnouncementMutation =
     api.announcement.addAnnouncement.useMutation();
   const addAnnouncement = async (input: {
