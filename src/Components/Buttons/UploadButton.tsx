@@ -77,7 +77,7 @@ export function UploadButton({
           setLoading(false);
           void refetch();
           link
-            ? toast.info("Video uploaded successfully.Please publish it.", {
+            ? toast("Video uploaded successfully.Please publish it.", {
                 duration: 4000,
                 action: {
                   label: "Go to Creator Studio",

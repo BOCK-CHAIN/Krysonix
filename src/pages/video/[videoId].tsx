@@ -24,6 +24,8 @@ import {
 } from "~/Components/Components";
 import { useSession } from "next-auth/react";
 import Head from "next/head";
+import { Share } from "lucide-react";
+import { Button } from "~/Components/ui/button";
 import { env } from "~/env.mjs";
 
 const VideoPage: NextPage = () => {
@@ -67,7 +69,6 @@ const VideoPage: NextPage = () => {
   useEffect(() => {
     if (videoId) {
       void refetchVideoData();
-
       addViewFunc();
     }
   }, [sessionData]);
@@ -98,12 +99,41 @@ const VideoPage: NextPage = () => {
     }
   };
 
+  const handleShare = async (video: { id: string; title: string | null }) => {
+    const videoUrl = `${window.location.origin}/video/${video.id}`;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: video.title || "",
+          url: videoUrl,
+        });
+      } catch (error) {
+        console.error("Error sharing:", error);
+      }
+    } else {
+      navigator.clipboard.writeText(videoUrl);
+      alert("Link copied to clipboard!");
+    }
+  };
+
+  if (!video) {
+    return null;
+  }
+
   return (
     <>
       <Head>
-        <title>{video?.title}</title>
-        <meta name="description" content={user?.description || ""} />
-        <link rel="icon" href="/favicon.ico" />
+        <title>{video.title}</title>
+        <meta property="og:title" content={video.title || ""} />
+        <meta property="og:description" content={video.description || ""} />
+        <meta property="og:image" content={video.thumbnailUrl || ""} />
+        <meta property="og:url" content={`https://krysonix.bock/video/${video.id}`} />
+        <meta property="og:type" content="video.other" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={video.title || ""} />
+        <meta name="twitter:description" content={video.description || ""} />
+        <meta name="twitter:image" content={video.thumbnailUrl || ""} />
       </Head>
       <Layout closeSidebar={true}>
         <main className="mx-auto lg:flex">
@@ -135,26 +165,33 @@ const VideoPage: NextPage = () => {
                 <div className="mb-3 flex space-x-3 rounded-2xl border border-gray-200 p-4 shadow-sm">
                   <div className="min-w-0 flex-1 space-y-3 ">
                     <div className="xs:flex-wrap flex flex-row justify-between gap-4 max-md:flex-wrap">
-                      <div className="flex flex-col items-start justify-center gap-1 self-stretch ">
+                      <div className="flex flex-col items-start justify-center gap-1 self-stretch">
                         <VideoTitle title={video.title as string} />
-                        <VideoInfo
-                          views={video.views}
-                          createdAt={video.createdAt}
-                        />
+                        <VideoInfo views={video.views} createdAt={video.createdAt} />
                       </div>
-                      <div className="flex-inline flex items-end justify-start  gap-4 self-start  ">
-                        <LikeDislikeButton
-                          EngagementData={{
-                            id: video.id,
-                            likes: video.likes,
-                            dislikes: video.dislikes,
-                          }}
-                          viewer={{
-                            hasDisliked: viewer.hasDisliked,
-                            hasLiked: viewer.hasLiked,
-                          }}
-                        />
-                        <SaveButton videoId={video.id} />
+                      <div className="flex flex-col items-end gap-2 self-start">
+                        <div className="flex items-center gap-4">
+                          <LikeDislikeButton
+                            EngagementData={{
+                              id: video.id,
+                              likes: video.likes,
+                              dislikes: video.dislikes,
+                            }}
+                            viewer={{
+                              hasDisliked: viewer.hasDisliked,
+                              hasLiked: viewer.hasLiked,
+                            }}
+                          />
+                          <Button
+                            size={"sm"}
+                            onClick={() => handleShare(video)}
+                            className="flex items-center gap-2 rounded-lg bg-purple-800 text-white hover:bg-purple-800 px-3 py-2  transition-all"
+                          >
+                            <Share size={20} />
+                            <span className="text-sm">Share</span>
+                          </Button>
+                          <SaveButton videoId={video.id} />
+                        </div>
                       </div>
                     </div>
 

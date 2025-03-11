@@ -56,8 +56,8 @@ export default function SignUpForm({
           if (!result!.ok) {
             toast.error("something went wrong. Please SignIn");
           }
-          toast.success("Account created successfully");
           router.replace("/");
+          toast.success("Account created successfully");
           setLoading(false);
         } else {
           toast.error(res.message);
@@ -69,7 +69,7 @@ export default function SignUpForm({
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-900 p-4">
-      <Card className="w-full max-w-md rounded-2xl border border-gray-700 bg-neutral-800 bg-opacity-50 p-8 shadow-xl backdrop-blur-md">
+      <Card className="w-full max-w-md rounded-2xl border border-gray-700 bg-neutral-800 bg-opacity-50 shadow-xl backdrop-blur-md p-4 pt-0">
         <CardHeader className="flex flex-col items-center gap-3">
           <Image
             onClick={() => router.push("/")}
