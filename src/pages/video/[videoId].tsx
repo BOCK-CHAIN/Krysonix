@@ -27,6 +27,7 @@ import Head from "next/head";
 import { Share } from "lucide-react";
 import { Button } from "~/Components/ui/button";
 import { env } from "~/env.mjs";
+import { toast } from "sonner";
 
 const VideoPage: NextPage = () => {
   const router = useRouter();
@@ -110,9 +111,11 @@ const VideoPage: NextPage = () => {
       } catch (error) {
         console.error("Error sharing:", error);
       }
-    } else {
+    } else if(navigator.clipboard.writeText) {
       navigator.clipboard.writeText(videoUrl);
-      alert("Link copied to clipboard!");
+      toast.info("Link copied to clipboard");
+    } else{
+      toast.error("Sorry, your browser does not support sharing");
     }
   };
 
