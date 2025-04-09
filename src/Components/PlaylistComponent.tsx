@@ -67,8 +67,8 @@ export const PlaylistPage: React.FC<PlaylistPageProps> = ({
           />
           <Description
             text={playlist.description || ""}
-            length={250}
             border={false}
+            clampLines={3}
           />
           <div className="flex flex-row place-content-between gap-x-4">
             <Link href={`/${user.id}/profileVideos`} key={user.id}>

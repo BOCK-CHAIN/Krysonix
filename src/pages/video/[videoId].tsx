@@ -224,8 +224,8 @@ const VideoPage: NextPage = () => {
                     </div>
                     <Description
                       text={video.description || ""}
-                      length={200}
                       border={true}
+                      clampLines={1}
                     />
                   </div>
                 </div>
